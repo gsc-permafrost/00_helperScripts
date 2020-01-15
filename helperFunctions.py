@@ -27,11 +27,3 @@ def emailMessage(receiver, message):
     except:
         return "Invalid email. Message not sent."
     return "Message sent"
-
-
-def speak(message):
-    # prints out message in python terminal as well as arcpy window
-    print(message)
-    arcpy.AddMessage(message)
-    return
-
