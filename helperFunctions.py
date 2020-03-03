@@ -8,8 +8,12 @@ Visit https://realpython.com/python-send-email/ for instructions on how to set u
 with the emailMessage function.
 """
 
+import os
 import smtplib
 import arcpy
+import datetime
+
+tFmt = "%Y-%m-%d %H:%M:%S"
 
 
 def emailMessage(receiver, message):
@@ -27,3 +31,21 @@ def emailMessage(receiver, message):
     except:
         return "Invalid email. Message not sent."
     return "Message sent"
+
+
+def cleanUp(fldr):
+    """Deletes everything within a folder.
+
+    This function is typically run on the folder containing all of the temporary outputs to free up disk space .
+
+    :param fldr: a folder path who's contents will be deleted
+    """
+    arcpy.AddMessage(datetime.datetime.now().strftime(tFmt) + " Cleaning out " + os.path.basename(fldr) + "...")
+    # loop through files/folders in folder and delete
+    for f in os.listdir(fldr):
+        try:
+            os.remove(os.path.join(fldr, f))
+        except:
+            arcpy.AddMessage("Could not remove " + f)
+    arcpy.AddMessage("DONE!")
+    return
