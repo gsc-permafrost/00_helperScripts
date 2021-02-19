@@ -46,6 +46,6 @@ def cleanUp(fldr):
     try:
         os.remove(fldr)
     except:
-        arcpy.AddMessage("Cuoud not remove " + fldr)
+        arcpy.AddMessage("Could not remove " + fldr)
     arcpy.AddMessage("DONE!")
     return
