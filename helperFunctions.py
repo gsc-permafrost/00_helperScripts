@@ -47,5 +47,6 @@ def cleanUp(fldr):
             os.remove(os.path.join(fldr, f))
         except:
             arcpy.AddMessage("Could not remove " + f)
+    os.remove(fldr)
     arcpy.AddMessage("DONE!")
     return
