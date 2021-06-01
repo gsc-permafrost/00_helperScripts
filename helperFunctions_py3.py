@@ -11,6 +11,7 @@ with the emailMessage function.
 import os
 import smtplib
 import arcpy
+import pandas as pd
 
 
 def emailMessage(receiver, message):
@@ -45,3 +46,18 @@ def cleanUp(fldr):
             arcpy.AddMessage("Could not remove " + f)
     arcpy.AddMessage("DONE!")
     return
+
+
+def shpToPandas(shp):
+    fields = arcpy.Describe(shp).fields
+    fNames = []
+    for f in fields:
+        fNames.append(f.name)
+
+    data = pd.DataFrame(columns=fNames)
+    cursor = arcpy.da.SearchCursor(shp, fNames)
+    lineNum = 0
+    for row in cursor:
+        data.loc[lineNum] = row
+        lineNum += 1
+    return data
