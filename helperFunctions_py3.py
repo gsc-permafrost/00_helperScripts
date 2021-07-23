@@ -40,10 +40,17 @@ def cleanUp(fldr):
     arcpy.AddMessage("Cleaning out " + os.path.basename(fldr) + "...")
     # loop through files/folders in folder and delete
     for f in os.listdir(fldr):
-        try:
-            os.remove(os.path.join(fldr, f))
-        except:
-            arcpy.AddMessage("Could not remove " + f)
+        path = os.path.join(fldr, f)
+        if os.path.isdir(path):
+            if len(os.listdir(path)) == 0:
+                os.rmdir(path)
+            else:
+                arcpy.AddMessage(path + " contains files. Did not remove")
+        else:
+            try:
+                os.remove(path)
+            except:
+                arcpy.AddMessage("Could not remove " + f)
     arcpy.AddMessage("DONE!")
     return
 
