@@ -10,6 +10,7 @@ with the emailMessage function.
 
 import os
 import smtplib
+import shutil
 import arcpy
 import pandas as pd
 
@@ -32,22 +33,12 @@ def emailMessage(receiver, message):
 
 def cleanUp(fldr):
     """Deletes everything within a folder.
-
-    This function is typically run on the folder containing all of the temporary outputs to free up disk space .
+    Legacy function from code written with less knowledge. replaced with shutil.rmtree()
 
     :param fldr: a folder path who's contents will be deleted
     """
     print("Cleaning out " + os.path.basename(fldr) + "...")
-    # loop through files/folders in folder and delete
-    for f in os.listdir(fldr):
-        path = os.path.join(fldr, f)
-        if os.path.isdir(path):
-            os.rmdir(path)
-        else:
-            try:
-                os.remove(path)
-            except:
-                print("Could not remove " + f)
+    shutil.rmtree(fldr, ignore_errors=True)
     print("DONE!")
     return
 
