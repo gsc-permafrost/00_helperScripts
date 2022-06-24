@@ -62,9 +62,9 @@ def shpToPandas(shp):
         fNames.append(f.name)
 
     data = pd.DataFrame(columns=fNames)
-    cursor = arcpy.da.SearchCursor(shp, fNames)
-    lineNum = 0
-    for row in cursor:
-        data.loc[lineNum] = row
-        lineNum += 1
+    with arcpy.da.SearchCursor(shp, fNames) as cursor:
+        lineNum = 0
+        for row in cursor:
+            data.loc[lineNum] = row
+            lineNum += 1
     return data
